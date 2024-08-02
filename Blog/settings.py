@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,13 +32,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'articles',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'articles',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -48,11 +52,26 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.linkedin.LinkedinOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '2548953101944385'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'd2aa74abf66d6c46fe0d65c9d70eea66'
+
+SOCIAL_AUTH_GITHUB_KEY = 'Ov23liQsvuUnneRVdul2'
+SOCIAL_AUTH_GITHUB_SECRET = '0776f89a003c15b492ca1fafc84533c5738f27c5'
+
+SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = '77yvkn2ymougma'
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = 'orDilqRKHF1G2nqZ'
+
 
 ROOT_URLCONF = 'Blog.urls'
 
@@ -116,13 +135,23 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOGIN_REDIRECT_URL = 'article_list'
+
+LOGIN_URL = 'login'
+
+LOGOUT_URL = 'logout'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
